@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=390, height=844, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>iPhone 12 Site</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script> <!-- Подключаем библиотеку конфетти -->
+</head>
+
+<body>
+    <div class="container">
+        <div class="background-image">
+            <img src="image.jpg" alt="Background" class="image">
+        </div>
+        <div class="slider-container">
+            <input class="range" type="range" value="0" min="0" max="99999" id="slider">
+            <div class="value-container">
+                <span id="sliderValue">0</span>
+                <img src="icon.png" alt="Icon" class="slider-icon"> <!-- Иконка рядом с слайдером -->
+            </div>
+        </div>
+    </div>
+
+    <div id="needleContainer"></div> <!-- Контейнер для иголочек -->
+    
+    <!-- Невидимый контейнер, который появляется при клике -->
+    <div id="clickableArea" class="clickable-area"></div>
+    
+    <!-- Контейнер с сообщением о переводе в баксы -->
+    <div id="messageBox" class="message-box">
+        <img src="success.gif" alt="Success" class="checkmark"> <!-- Гифка вместо галочки -->
+        <p class="message-text">Your coins have been sent to your account</p>
+    </div>
+
+    <script type="text/javascript">
+        const slider = document.getElementById('slider');
+        const sliderValue = document.getElementById('sliderValue');
+        const needleContainer = document.getElementById('needleContainer');
+        const clickableArea = document.getElementById('clickableArea');
+        const messageBox = document.getElementById('messageBox');
+
+        // Обработчик изменения значения слайдера
+        slider.addEventListener('input', function() {
+            sliderValue.textContent = slider.value;
+
+            // Генерируем конфетти при изменении слайдера
+            confetti({
+                particleCount: 5,  // Уменьшаем количество частиц
+                angle: Math.random() * 360,  // Случайный угол
+                spread: 45,  // Расстояние
+                origin: { x: 0.5, y: 0.5 },  // Центр экрана
+                colors: ['#ff0', '#0f0', '#00f', '#f00', '#ff00ff'],  // Цвета конфетти
+            });
+        });
+
+        // Обработчик клика по нижней части экрана
+        document.body.addEventListener('click', function(event) {
+            const yOffset = window.innerHeight - event.clientY; // Высота клика от нижней границы
+            if (yOffset < 100) { // Если клик был в нижней части экрана
+                createNeedleEffect(event.clientX, event.clientY); // Создаем анимацию иголочек
+            }
+        });
+
+        // Функция для создания иголочек
+        function createNeedleEffect(x, y) {
+            for (let i = 0; i < 5; i++) { // Сгенерируем несколько иголочек
+                const needle = document.createElement('div');
+                needle.classList.add('needle');
+                needle.style.left = `${x - 5}px`; // Позиционируем иголочку по X
+                needle.style.top = `${y - 5}px`; // Позиционируем иголочку по Y
+                needle.style.animationDelay = `${Math.random() * 1}s`; // Добавляем случайную задержку для анимации
+                needleContainer.appendChild(needle);
+
+                // Удаляем иголочку после анимации
+                setTimeout(() => {
+                    needle.remove();
+                }, 1000);
+            }
+        }
+
+        // Обработчик клика по невидимому контейнеру
+        clickableArea.addEventListener('click', function() {
+            showMessageBox();  // Показываем контейнер с сообщением
+        });
+
+        // Функция для отображения сообщения
+        function showMessageBox() {
+            messageBox.classList.add('show');  // Делаем сообщение видимым
+        }
+
+    </script>
+</body>
+
+</html>

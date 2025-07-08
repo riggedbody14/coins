@@ -1,0 +1,208 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #000;
+  overflow: hidden;
+  width: 390px; /* Ограничиваем ширину экрана под iPhone 12 */
+  height: 844px; /* Ограничиваем высоту экрана под iPhone 12 */
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Растягиваем картинку на весь экран */
+}
+
+.slider-container {
+  position: absolute;
+  top: 86.5%; /* Позиционируем слайдер по вертикали */
+  left: 50%; /* Позиционируем слайдер по горизонтали */
+  transform: translate(-50%, -50%); /* Центрируем слайдер */
+  width: 80%; /* Ширина слайдера */
+  max-width: 450px; /* Максимальная ширина слайдера */
+  padding: 25px 15px;
+  background-color: rgb(15 139 203); /* Подложка для слайдера */
+  border-radius: 10px;
+  text-align: center; /* Центрирование текста */
+}
+
+.range {
+  width: 100%;
+  height: 15px;
+  -webkit-appearance: none;
+  background: #ecfcfd;
+  outline: none;
+  border-radius: 15px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 1);
+}
+
+/* Стандартный стиль слайдера */
+.range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #00b3ff;
+  cursor: pointer;
+  border: 4px solid #333;
+}
+
+.range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #00fd0a;
+  cursor: pointer;
+  border: 4px solid #ffffff;
+}
+
+.range::-ms-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #00fd0a;
+  cursor: pointer;
+  border: 4px solid #333;
+}
+
+.value-container {
+  margin-top: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#sliderValue {
+  font-size: 50px;
+  color: #fff;
+  font-weight: bold;
+  line-height: 1;
+}
+
+/* Иконка рядом с слайдером */
+.slider-icon {
+  width: 70px;
+  height: 100%;
+  margin-left: -5px;
+}
+
+/* Стили для иголочек */
+#needleContainer {
+  position: absolute;
+  width: 100%; /* Ширина контейнера на всю ширину экрана */
+  height: 300px; /* Высота контейнера 300px */
+  bottom: 0; /* Позиционируем контейнер внизу */
+  left: 0;
+  display: flex;
+  justify-content: center; /* Центрируем иголочки */
+  align-items: center; /* Центрируем иголочки по вертикали */
+  pointer-events: none; /* Игнорируем клики по контейнеру иголочек */
+}
+
+.needle {
+  position: absolute;
+  width: 2px;
+  height: 15px;
+  background: #fff;
+  border-radius: 50%;
+  animation: needleAnimation 1s forwards;
+}
+
+/* Анимация иголочек */
+@keyframes needleAnimation {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) scale(0.5);
+    opacity: 0;
+  }
+}
+
+/* Невидимый контейнер */
+.clickable-area {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0); /* Прозрачный фон */
+  pointer-events: auto; /* Разрешаем клики по контейнеру */
+}
+
+/* Стиль для всплывающего сообщения */
+.message-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff; /* Светлый фон */
+  padding: 20px;
+  border-radius: 10px;
+  color: #000; /* Белый текст */
+  text-align: center;
+  display: none;
+  opacity: 0;
+  animation: showMessage 1s forwards;
+}
+
+.checkmark {
+  width: 100px; /* Размер гифки */
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+.message-text {
+  font-size: 20px;
+  font-weight: bold;
+  color: #515151;
+}
+
+.show {
+  display: block;
+  opacity: 1;
+}
+
+/* Анимация появления сообщения */
+@keyframes showMessage {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Блокируем доступ для других устройств */
+@media only screen and (min-width: 390px) and (max-width: 390px) and (min-height: 844px) and (max-height: 844px) {
+  /* Разрешить доступ только для iPhone 12 в вертикальном положении */
+  body {
+    display: block;
+  }
+}
